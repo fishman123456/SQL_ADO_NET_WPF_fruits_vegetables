@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection.PortableExecutable;
+using System.Data.Common;
 
 namespace SQL_ADO_NET_WPF_fruits_vegetables
 {
@@ -24,6 +25,9 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
     /// </summary>
     public partial class MainWindow : Window
     {
+        string connectString;
+        SqlDataAdapter adapter;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -39,19 +43,26 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
         }
         private void LoadData()
         {
+            string sql = "SELECT * FROM Veg_Fru"; 
+            // тупил часа два, вместо имени таблицы вставлял имя базы данных
+
             string connectString = (@"Data Source = (localdb)\MSSQLLocalDB;" +
             "Initial Catalog = Vegetables_Fruits; Integrated Security = true");
 
             SqlConnection con = new SqlConnection(connectString);
 
-           // string query = "SELECT * FROM Veg_Fru ";
+            SqlCommand cmd = new SqlCommand(sql,con);
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Veg_Fru", con);
-            DataTable dt = new DataTable();
             con.Open();
-            SqlDataAdapter sdr = new SqlDataAdapter();
-            sdr.Fill(dt);
+            //cmd.ExecuteNonQuery();
+            
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
             sql_data.ItemsSource = dt.DefaultView;
+
+
+
             con.Close();
         }
     }
@@ -66,5 +77,5 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
 //// 8 Показать овощи и фрукты с калорийность выше указанной;    запрос
 //// 9 Показать овощи и фрукты с калорийность ниже указанной.    запрос
 ///
-///   код который можно не писать в ZAML
+///   
 ///   

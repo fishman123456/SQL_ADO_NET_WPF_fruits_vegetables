@@ -29,18 +29,35 @@
                   Grid.ColumnSpan="2" Grid.Row="0" Margin="10" FontSize="12" 
                       ToolTip="введите строку для соединения  (localdb)\MSSQLLocalDB" VerticalContentAlignment="Center"/>
         <DataGrid Name="sql_data" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="9"
-                  Margin="10">
+                  Margin="10" DataGrid.IsReadOnly ="False"
+                  ItemsSource="{Binding Source=list}"
+          AutoGenerateColumns="False" CanUserResizeColumns="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding = "{Binding id}"
-                            Header = "id" Width = "SizeToHeader" />
+                            Header = "id" 
+                                    Width = "SizeToHeader"
+                                   
+                                    />
                 <DataGridTextColumn Binding = "{Binding Name_v_f}"
-                            Header = "Name_v_f"  Width = "SizeToHeader" />
+                            Header = "Name_v_f" 
+                                    Width = "SizeToHeader"
+                                   
+                                    />
                 <DataGridTextColumn Binding = "{Binding Type_v_f}"
-                             Header = "Type_v_f" Width = "SizeToHeader" />
+                             Header = "Type_v_f"
+                                    Width = "SizeToHeader"
+                                   
+                                    />
                 <DataGridTextColumn Binding = "{Binding Color_v_f}"
-                             Header = "Color_v_f" Width = "SizeToHeader" />
+                             Header = "Color_v_f" 
+                                    Width = "SizeToHeader"
+                                   
+                                    />
                 <DataGridTextColumn Binding = "{Binding Caloric_v_f}"
-                             Header = "Caloric_v_f" Width = "SizeToHeader" />
+                             Header = "Caloric_v_f" 
+                                    Width = "SizeToHeader"
+                                  
+                                    />
             </DataGrid.Columns>
         </DataGrid>
         <Button Name="butt_load" Grid.Column="3" Grid.Row="0"
