@@ -54,14 +54,14 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
             SqlCommand cmd = new SqlCommand(sql,con);
 
             con.Open();
-            //cmd.ExecuteNonQuery();
+            
             
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
             sql_data.ItemsSource = dt.DefaultView;
 
-
+            cmd.ExecuteNonQuery();
 
             con.Close();
         }
