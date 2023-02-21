@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection.PortableExecutable;
 using System.Data.Common;
+using System.Data.SqlTypes;
 
 namespace SQL_ADO_NET_WPF_fruits_vegetables
 {
@@ -25,45 +26,75 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
     /// </summary>
     public partial class MainWindow : Window
     {
-        string connectString;
-        SqlDataAdapter adapter;
         
+        SqlDataAdapter adapter;
+
         public MainWindow()
         {
             InitializeComponent();
             LoadData();
         }
 
+       public string sqlsel = "SELECT * FROM Veg_Fru";
+       public string sqlupd = "update Veg_Fru";
+       public string insertString = "insert into Veg_Fru (Name_v_f, Type_v_f,Color_v_f,Caloric_v_f)" +
+        "values ( 'кабачёк','овощь','белый','255')";
+        // тупил часа два, вместо имени таблицы вставлял имя базы данных
 
+        string connectString = (@"Data Source = (localdb)\MSSQLLocalDB;" +
+        "Initial Catalog = Vegetables_Fruits; Integrated Security = true");
         //SqlConnection connection = new SqlConnection(@"Data Source = (localdb)\MSSQLLocalDB;" +
         //"Initial Catalog = Vegetables_Fruits; Integrated Security = true");
-        private void butt_load_Click(object sender, RoutedEventArgs e)
+
+        public void LoadData()
         {
+           
 
-        }
-        private void LoadData()
-        {
-            string sql = "SELECT * FROM Veg_Fru"; 
-            // тупил часа два, вместо имени таблицы вставлял имя базы данных
-
-            string connectString = (@"Data Source = (localdb)\MSSQLLocalDB;" +
-            "Initial Catalog = Vegetables_Fruits; Integrated Security = true");
-
-            SqlConnection con = new SqlConnection(connectString);
-
-            SqlCommand cmd = new SqlCommand(sql,con);
-
+            SqlConnection con = null;
+            //описываем соединение 
+            con = new SqlConnection(connectString);
+            //создаем комманду на соединение
+            SqlCommand cmd = new SqlCommand(sqlsel, con);
+            //открываем соединение
             con.Open();
-            
-            
+            SqlDataAdapter sda = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            sql_data.ItemsSource = dt.DefaultView;
+           
+            //выполнить запрос, занесенный
+            //в объект command
+            cmd.ExecuteNonQuery();
+
+            con.Close();
+        }
+
+        private void butt_test_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnection con = null;
+            //описываем соединение 
+            con = new SqlConnection(connectString);
+            //создаем комманду на соединение
+            SqlCommand cmd = new SqlCommand(insertString, con);
+            //открываем соединение
+            con.Open();
+
+
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
             sql_data.ItemsSource = dt.DefaultView;
 
+            //выполнить запрос, занесенный
+            //в объект command
             cmd.ExecuteNonQuery();
 
             con.Close();
+        }
+
+        private void butt_load_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQL_ADO_NET_WPF_fruits_vegetables"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="610">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150*"/>
@@ -33,38 +33,33 @@
                   ItemsSource="{Binding Source=list}"
           AutoGenerateColumns="False" CanUserResizeColumns="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding = "{Binding id}"
-                            Header = "id" 
-                                    Width = "SizeToHeader"
-                                   
+                <DataGridTextColumn Binding = "{Binding Id}"
+                            Header = "Id" 
+                                    Width = "50*"
                                     />
                 <DataGridTextColumn Binding = "{Binding Name_v_f}"
                             Header = "Name_v_f" 
-                                    Width = "SizeToHeader"
-                                   
+                                    Width = "100"
                                     />
                 <DataGridTextColumn Binding = "{Binding Type_v_f}"
                              Header = "Type_v_f"
-                                    Width = "SizeToHeader"
-                                   
+                                    Width = "100"
                                     />
                 <DataGridTextColumn Binding = "{Binding Color_v_f}"
                              Header = "Color_v_f" 
-                                    Width = "SizeToHeader"
-                                   
+                                    Width = "100"
                                     />
                 <DataGridTextColumn Binding = "{Binding Caloric_v_f}"
                              Header = "Caloric_v_f" 
-                                    Width = "SizeToHeader"
-                                  
+                                    Width = "100*"
                                     />
             </DataGrid.Columns>
         </DataGrid>
         <Button Name="butt_load" Grid.Column="3" Grid.Row="0"
                 Margin="10" Content="загрузка" FontSize="12" 
                 ToolTip="нажмите для загрузки" Click="butt_load_Click"/>
-        <Button Name="butt_unic" Grid.Column="3" Grid.Row="1"
-                Margin="10" Content="уникальные" FontSize="12" 
-                ToolTip="нажмите для загрузки" Click="butt_load_Click"/>
+        <Button Name="butt_test" Grid.Column="3" Grid.Row="1"
+                Margin="10" Content="тест" FontSize="12" 
+                ToolTip="тест" Click="butt_test_Click"/>
     </Grid>
 </Window>
