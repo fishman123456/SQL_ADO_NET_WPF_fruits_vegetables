@@ -20,6 +20,7 @@ using System.Data.Common;
 using System.Data.SqlTypes;
 using System.Text.RegularExpressions;
 using System.Windows.Controls.Primitives;
+using System.Diagnostics;
 // отсоединеный режим работы через адаптер
 namespace SQL_ADO_NET_WPF_fruits_vegetables
 {
@@ -28,7 +29,7 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         SqlDataAdapter adapter;
 
         public MainWindow()
@@ -36,23 +37,23 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
             InitializeComponent();
             LoadData();
             // to do меняем кодировку
-           // System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            // System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         }
 
-       public string sqlsel = "SELECT * FROM Veg_Fru";
-       public string sqlupd = "update Veg_Fru";
+        public string sqlsel = "SELECT * FROM Veg_Fru";
+        public string sqlupd = "update Veg_Fru";
         public string insertString = "insert into Veg_Fru(Name_v_f, Type_v_f,Color_v_f,Caloric_v_f)" +
             " values (N'автор',N'попытка',N'апр','2')";
         // тупил часа два, вместо имени таблицы вставлял имя базы данных
 
-        string connectString = (@"Data Source = (localdb)\MSSQLLocalDB; " +
+        public string connectString = (@"Data Source = (localdb)\MSSQLLocalDB; " +
         "Initial Catalog = Vegetables_Fruits; Integrated Security = true");
         //SqlConnection connection = new SqlConnection(@"Data Source = (localdb)\MSSQLLocalDB;" +
         //"Initial Catalog = Vegetables_Fruits; Integrated Security = true");
 
         public void LoadData()
         {
-           
+
 
             SqlConnection con = null;
             //описываем соединение 
@@ -65,7 +66,7 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
             DataTable dt = new DataTable();
             sda.Fill(dt);
             sql_data.ItemsSource = dt.DefaultView;
-           
+
             //выполнить запрос, занесенный
             //в объект command
             cmd.ExecuteNonQuery();
@@ -73,7 +74,7 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
             con.Close();
         }
 
-     
+
 
         private void butt_load_Click(object sender, RoutedEventArgs e)
         {
@@ -105,6 +106,7 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
         {
 
         }
+
         private void butt_1_Click(object sender, RoutedEventArgs e)
         {
             SqlConnection con = null;
@@ -141,13 +143,16 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
         private void butt_3_Click(object sender, RoutedEventArgs e)
         {
             // не работает нифига 21-02-2023 18-20
+            // 18-50 заработало! запрос надо длинный
             // SELECT MAX(salary) as max FROM workers
             SqlConnection con = null;
             //описываем соединение 
             con = new SqlConnection(connectString);
-            //создаем комманду на соединение  21-02-2023 1_готово
+            //создаем комманду на соединение  
             SqlCommand cmdin = new SqlCommand(
-                "SELECT  MAX(Caloric_v_f) FROM Veg_Fru " , con);
+                "SELECT  Id, Name_v_f, Caloric_v_f FROM Veg_Fru " +
+                "WHERE Caloric_v_f = (SELECT MAX(Caloric_v_f) FROM Veg_Fru)", con);
+
             //открываем соединение
             con.Open();
             SqlDataAdapter sdain = new SqlDataAdapter(cmdin);
@@ -156,8 +161,143 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
             sql_data.ItemsSource = dt.DefaultView;
             con.Close();
         }
+
+        private void butt_4_Click(object sender, RoutedEventArgs e)
+        {
+            // SELECT MAX(salary) as max FROM workers
+            SqlConnection con = null;
+            //описываем соединение 
+            con = new SqlConnection(connectString);
+            //создаем комманду на соединение  21-02-2023 1_готово
+            SqlCommand cmdin = new SqlCommand(
+                 "SELECT  Id, Name_v_f, Caloric_v_f FROM Veg_Fru " +
+                "WHERE Caloric_v_f = (SELECT min (Caloric_v_f) FROM Veg_Fru)", con);
+            //открываем соединение
+            con.Open();
+            SqlDataAdapter sdain = new SqlDataAdapter(cmdin);
+            DataTable dt = new DataTable();
+            sdain.Fill(dt);
+            sql_data.ItemsSource = dt.DefaultView;
+            con.Close();
+        }
+
+        private void butt_5_Click(object sender, RoutedEventArgs e)
+        {
+
+            // SELECT MAX(salary) as max FROM workers
+            SqlConnection con = null;
+            //описываем соединение 
+            con = new SqlConnection(connectString);
+            //создаем комманду на соединение  21-02-2023 1_готово
+            SqlCommand cmdin = new SqlCommand(
+                 "SELECT avg Caloric_v_f FROM Veg_Fru ", con);
+            //открываем соединение
+            con.Open();
+            SqlDataAdapter sdain = new SqlDataAdapter(cmdin);
+            DataTable dt = new DataTable();
+            //sdain.Fill(dt);
+            MessageBox.Show("не работает");
+            // sql_data.ItemsSource = dt.DefaultView;
+            con.Close();
+        }
+
+        private void butt_7_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // SELECT MAX(salary) as max FROM workers
+                SqlConnection con = null;
+                //описываем соединение 
+                con = new SqlConnection(connectString);
+                //создаем комманду на соединение  21-02-2023 1_готово
+                SqlCommand cmdin = new SqlCommand(
+                     "SELECT  * FROM Veg_Fru " +
+                    "WHERE Color_v_f like '%" + tb3.Text + "%'", con);
+                //открываем соединение
+                con.Open();
+                SqlDataAdapter sdain = new SqlDataAdapter(cmdin);
+                DataTable dt = new DataTable();
+                sdain.Fill(dt);
+                sql_data.ItemsSource = dt.DefaultView;
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void butt_8_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // SELECT MAX(salary) as max FROM workers
+                SqlConnection con = null;
+                //описываем соединение 
+                con = new SqlConnection(connectString);
+                //создаем комманду на соединение  21-02-2023 1_готово
+                SqlCommand cmdin = new SqlCommand(
+                     "SELECT  Id, Name_v_f, Caloric_v_f FROM Veg_Fru " +
+                    "WHERE Caloric_v_f >=" + Int32.Parse(tb4.Text), con);
+                //открываем соединение
+                con.Open();
+                SqlDataAdapter sdain = new SqlDataAdapter(cmdin);
+                DataTable dt = new DataTable();
+                sdain.Fill(dt);
+                sql_data.ItemsSource = dt.DefaultView;
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                tb4.Background = Brushes.Red;
+                MessageBox.Show(ex.Message, "введите число");
+                tb4.Background = Brushes.White;
+            }
+
+        }
+
+        private void butt_9_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // SELECT MAX(salary) as max FROM workers
+                SqlConnection con = null;
+                //описываем соединение 
+                con = new SqlConnection(connectString);
+                //создаем комманду на соединение  21-02-2023 1_готово
+                SqlCommand cmdin = new SqlCommand(
+                     "SELECT  Id, Name_v_f, Caloric_v_f FROM Veg_Fru " +
+                    "WHERE Caloric_v_f <=" + Int32.Parse(tb4.Text), con);
+                //открываем соединение
+                con.Open();
+                SqlDataAdapter sdain = new SqlDataAdapter(cmdin);
+                DataTable dt = new DataTable();
+                sdain.Fill(dt);
+                sql_data.ItemsSource = dt.DefaultView;
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                tb4.Background = Brushes.Red;
+                MessageBox.Show(ex.Message, "введите число");
+                tb4.Background = Brushes.White;
+            }
+        }
+        // стираем по двойному щелчку мыши
+        private void tb4_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            tb4.Clear();
+        }
+        // стираем по двойному щелчку мыши
+        private void tb3_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            tb3.Clear();
+        }
     }
+
 }
+
 //// 1 Отображение всех названий и овощей (исключая повторения) +
 //// 2 Отображение всех цветов (без повторений)                 запрос +
 //// 3 Показать максимальную калорийность и у какого продукта   запрос

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQL_ADO_NET_WPF_fruits_vegetables"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="610">
+        Title="U83_F" Height="450" Width="610">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*"/>
@@ -30,7 +30,8 @@
 
         <TextBox  Name="textb_st_sql" TextWrapping="Wrap"
                   Grid.ColumnSpan="5" Grid.Row="0" Margin="10" FontSize="12" 
-                      ToolTip="введите строку для соединения  (localdb)\MSSQLLocalDB" VerticalContentAlignment="Center"/>
+                  
+                      ToolTip="введите строку для соединения не работает(localdb)\MSSQLLocalDB" VerticalContentAlignment="Center"/>
         <DataGrid Name="sql_data" Grid.ColumnSpan="5" Grid.Row="1" Grid.RowSpan="8"
                   Margin="10" DataGrid.IsReadOnly ="True"
                   ItemsSource="{Binding}"
@@ -73,10 +74,44 @@
                 Margin="10" Content="макс каллорий" FontSize="10" 
                 ToolTip=" 3 Показать максимальную калорийность и у какого продукта" 
                 Click="butt_3_Click"/>
-        <TextBox Name="tb0" Grid.Column="0" Grid.Row="9"  Margin="2,0,2,0"  Cursor="IBeam" VerticalAlignment="Center" Height="43" IsReadOnly="True" Background="#FFC7A1A1"/>
-        <TextBox Name="tb1" Grid.Column="1" Grid.Row="9"  Margin="2,0,2,0"  Cursor="IBeam" VerticalAlignment="Center" Height="43" Background="#FFC7A1A1" TextChanged="tb1_TextChanged"/>
-        <TextBox Name="tb2" Grid.Column="2" Grid.Row="9"  Margin="2,0,2,0"  Cursor="IBeam" VerticalAlignment="Center" Height="43" Background="#FFC7A1A1" TextChanged="tb2_TextChanged"/>
-        <TextBox Name="tb3" Grid.Column="3" Grid.Row="9"  Margin="2,0,2,0"  Cursor="IBeam" VerticalAlignment="Center" Height="43" Background="#FFC7A1A1" TextChanged="tb3_TextChanged"/>
-        <TextBox Name="tb4" Grid.Column="4" Grid.Row="9"  Margin="2,0,2,0"  Cursor="IBeam" VerticalAlignment="Center" Height="43" Background="#FFC7A1A1" TextChanged="tb4_TextChanged" PreviewTextInput="tb4_PreviewTextInput" />
+        <Button Name="butt_4" Grid.Column="5" Grid.Row="4"
+                Margin="10" Content="мин каллорий" FontSize="10" 
+                ToolTip=" 4 Показать минимальную калорийность и у какого продукта" 
+                Click="butt_4_Click"/>
+        <Button Name="butt_5" Grid.Column="5" Grid.Row="5"
+                Margin="10" Content="сред каллорий" FontSize="10" 
+                ToolTip=" 5 Показать среднюю калорийность" 
+                Click="butt_5_Click"/>
+        <Button Name="butt_7" Grid.Column="5" Grid.Row="7"
+                Margin="10" Content="выбор по цвету" FontSize="10" 
+                ToolTip=" Показать количество овощей и фруктов заданного цвета" 
+                Click="butt_7_Click"/>
+        <Button Name="butt_8" Grid.Column="5" Grid.Row="8"
+                Margin="10" Content="выше указанной" FontSize="10" 
+                ToolTip=" Показать овощи и фрукты с калорийность выше указанной" 
+                Click="butt_8_Click"/>
+        <Button Name="butt_9" Grid.Column="5" Grid.Row="9"
+                Margin="10" Content="ниже указанной" FontSize="10" 
+                ToolTip=" Показать овощи и фрукты с калорийность ниже указанной" 
+                Click="butt_9_Click"/>
+        
+        <TextBox Name="tb0" Grid.Column="0" Grid.Row="9"  Margin="2,0,2,0" 
+                 Cursor="IBeam" VerticalAlignment="Center" Height="43" 
+                 IsReadOnly="True" />
+        <TextBox Name="tb1" Grid.Column="1" Grid.Row="9"  Margin="2,0,2,0" 
+                 Cursor="IBeam" VerticalAlignment="Center" Height="43" 
+                  TextChanged="tb1_TextChanged"/>
+        <TextBox Name="tb2" Grid.Column="2" Grid.Row="9"  Margin="2,0,2,0"
+                 Cursor="IBeam" VerticalAlignment="Center" Height="43"
+                 TextChanged="tb2_TextChanged"/>
+        <TextBox Name="tb3" Grid.Column="3" Grid.Row="9"  Margin="2,0,2,0" 
+                 Cursor="IBeam" VerticalAlignment="Center" Height="43" 
+                  TextChanged="tb3_TextChanged" Text="укажите цвет"
+        MouseDoubleClick="tb3_MouseDoubleClick" ToolTip="два раза клик мышкой"/>
+        <TextBox Name="tb4" Grid.Column="4" Grid.Row="9"  Margin="2,0,2,0"
+                 Cursor="IBeam" VerticalAlignment="Center" Height="43" 
+                  TextChanged="tb4_TextChanged"
+                 PreviewTextInput="tb4_PreviewTextInput" Text="укажите число"
+                 MouseDoubleClick="tb4_MouseDoubleClick" ToolTip="два раза клик мышкой" />
     </Grid>
 </Window>
