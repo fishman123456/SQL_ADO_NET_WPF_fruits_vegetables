@@ -190,15 +190,16 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
             con = new SqlConnection(connectString);
             //создаем комманду на соединение  21-02-2023 1_готово
             SqlCommand cmdin = new SqlCommand(
-                 "SELECT avg Caloric_v_f FROM Veg_Fru ", con);
+                 "SELECT avg (Caloric_v_f) AS Data FROM Veg_Fru ", con);
             //открываем соединение
-            con.Open();
+            
             SqlDataAdapter sdain = new SqlDataAdapter(cmdin);
             DataTable dt = new DataTable();
+            sdain.Fill(dt);
             //sdain.Fill(dt);
-            MessageBox.Show("не работает");
+            MessageBox.Show($"Средняя калорийность {dt.Rows[0]["Data"]}");
             // sql_data.ItemsSource = dt.DefaultView;
-            con.Close();
+            
         }
 
         private void butt_7_Click(object sender, RoutedEventArgs e)
@@ -210,9 +211,9 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
                 //описываем соединение 
                 con = new SqlConnection(connectString);
                 //создаем комманду на соединение  21-02-2023 1_готово
+                string text = tb3.Text.ToString();
                 SqlCommand cmdin = new SqlCommand(
-                     "SELECT  * FROM Veg_Fru " +
-                    "WHERE Color_v_f like '%" + tb3.Text + "%'", con);
+                     $"SELECT * FROM Veg_Fru WHERE Color_v_f  like N'{text}%' ", con);
                 //открываем соединение
                 con.Open();
                 SqlDataAdapter sdain = new SqlDataAdapter(cmdin);
