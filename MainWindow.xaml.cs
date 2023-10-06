@@ -46,8 +46,7 @@ namespace SQL_ADO_NET_WPF_fruits_vegetables
             " values (N'автор',N'попытка',N'апр','2')";
         // тупил часа два, вместо имени таблицы вставлял имя базы данных
 
-        public string connectString = (@"Data Source = (localdb)\MSSQLLocalDB; " +
-        "Initial Catalog = Vegetables_Fruits; Integrated Security = true");
+        public string connectString = @"Data Source = (fishman\SQLEXPRESS; Initial Catalog = Vegetables_Fruits; Integrated Security = True";
         //SqlConnection connection = new SqlConnection(@"Data Source = (localdb)\MSSQLLocalDB;" +
         //"Initial Catalog = Vegetables_Fruits; Integrated Security = true");
 
